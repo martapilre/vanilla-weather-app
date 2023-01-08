@@ -34,8 +34,18 @@ function displayTemperature(response) {
     iconElement.setAttribute("alt", response.data.condition.icon);
 }
 
-let apiKey = "f9328ad30706aefa211bt4fddce8obf6";
-let city = "Lisbon";
-let apiUrl = `https://api.shecodes.io/weather/v1/current?query=${city}&key=${apiKey}`;
+function search(city) {
+    let apiKey = "f9328ad30706aefa211bt4fddce8obf6";
+    let apiUrl = `https://api.shecodes.io/weather/v1/current?query=${city}&key=${apiKey}`;
+    axios.get(apiUrl).then(displayTemperature);
+}
 
-axios.get(apiUrl).then(displayTemperature);
+function handleSubmit(event) {
+    event.preventDefault();
+    let cityElement = document.querySelector("#city-input");
+    search(cityElement.value)
+}
+
+
+let form = document.querySelector("#search-form");
+form.addEventListener("submit", handleSubmit);
