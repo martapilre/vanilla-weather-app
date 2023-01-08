@@ -16,20 +16,26 @@ function formatDate(timestamp) {
 
 function displayTemperature(response) {
     let temperatureElement = document.querySelector('#temperature');
-    temperatureElement.innerHTML = response.data.temperature.current;
     let cityElement = document.querySelector('#city');
-    cityElement.innerHTML = response.data.city;
     let descriptionElement = document.querySelector('#description');
-    descriptionElement.innerHTML = response.data.condition.description;
     let humidityElement = document.querySelector('#humidity');
-    humidityElement.innerHTML = response.data.temperature.humidity;
     let windElement = document.querySelector('#wind')
-    windElement.innerHTML = response.data.wind.speed;
     let dateElement = document.querySelector('#date');
+    let iconElement = document.querySelector('#icon');
+
+
+    temperatureElement.innerHTML = Math.round(response.data.temperature.current);
+    cityElement.innerHTML = response.data.city;
+    descriptionElement.innerHTML = response.data.condition.description;
+    humidityElement.innerHTML = response.data.temperature.humidity;
+    windElement.innerHTML = response.data.wind.speed;
     dateElement.innerHTML = formatDate(response.data.time * 1000);
+    iconElement.setAttribute("src", response.data.condition.icon_url);
+    iconElement.setAttribute("alt", response.data.condition.icon);
 }
 
 let apiKey = "f9328ad30706aefa211bt4fddce8obf6";
-let apiUrl = `https://api.shecodes.io/weather/v1/current?query=Lisbon&key=${apiKey}`;
+let city = "Lisbon";
+let apiUrl = `https://api.shecodes.io/weather/v1/current?query=${city}&key=${apiKey}`;
 
 axios.get(apiUrl).then(displayTemperature);
